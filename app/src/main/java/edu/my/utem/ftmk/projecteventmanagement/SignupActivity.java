@@ -22,17 +22,19 @@ public class SignupActivity extends AppCompatActivity {
         EditText etPassword = findViewById(R.id.etSignupPassword);
         Button btnSignup = findViewById(R.id.btnSignup);
         TextView tvLogin = findViewById(R.id.tvLogin);
+        EditText etIC = findViewById(R.id.etSignupIC);
 
         btnSignup.setOnClickListener(v -> {
             String name = etName.getText().toString().trim();
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
+            String ic = etIC.getText().toString().trim();
 
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || ic.isEmpty()) {
                 Toast.makeText(SignupActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else {
                 SqLite db = new SqLite(getApplicationContext());
-                User user = new User(name,password,email);
+                User user = new User(name,password,email,ic,"user");
                 long userId = db.addUser(user);
                 if(userId == 0){
                     Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show();

@@ -1,8 +1,9 @@
 package edu.my.utem.ftmk.projecteventmanagement;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,16 +31,35 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else {
                 SqLite db = new SqLite(getApplicationContext());
-                long id = db.login(email, password);
-                if(id == 0){
+                UserSession userSession = db.login(email, password);
+
+                if (userSession == null) {
                     Toast.makeText(LoginActivity.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
+                    int userId = userSession.getUserId();
+                    String role = userSession.getRole();
+
+                    // Save user ID in SharedPreferences
+                    SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("userId", userId);
+                    editor.apply();
+
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                    // Redirect based on role
+                    Intent intent = null;
+                    if ("user".equalsIgnoreCase(role)) {
+                        intent = new Intent(LoginActivity.this, UserHomepage.class);
+                    } else if ("admin".equalsIgnoreCase(role)) {
+                        intent = new Intent(LoginActivity.this, AdminHomepage.class);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Unknown role", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     startActivity(intent);
                     finish();
-
                 }
             }
         });

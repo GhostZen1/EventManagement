@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class BookingActivity extends AppCompatActivity {
+public class BookingActivitytemp extends AppCompatActivity {
 
     private TextView tvEventName, tvCategory;
     private Spinner spinnerSeats;

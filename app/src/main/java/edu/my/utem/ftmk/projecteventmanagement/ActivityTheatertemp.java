@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityTheater extends AppCompatActivity {
+public class ActivityTheatertemp extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
@@ -20,7 +20,7 @@ public class ActivityTheater extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_list);
+        setContentView(R.layout.activity_event_listtemp);
 
         // Set up the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -54,7 +54,7 @@ public class ActivityTheater extends AppCompatActivity {
                 Event clickedEvent = eventList.get(position);
 
                 // Create an Intent to open BookingActivity
-                Intent intent = new Intent(ActivityTheater.this, BookingActivity.class);
+                Intent intent = new Intent(ActivityTheatertemp.this, BookingActivitytemp.class);
 
                 // Pass the event data to BookingActivity
                 intent.putExtra("EVENT_NAME", clickedEvent.getName());
@@ -71,7 +71,7 @@ public class ActivityTheater extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle the action of the back button
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(ActivityTheater.this, MainActivity.class); // Go back to MainActivity
+            Intent intent = new Intent(ActivityTheatertemp.this, MainActivitytemp.class); // Go back to MainActivity
             startActivity(intent);
             finish();
             return true;

@@ -11,56 +11,48 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OtherActivity extends AppCompatActivity {
+public class ActivitySporttemp extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
-    private List<Event> eventList; // Use List<Event> instead of List<String>
+    private List<Event> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_list);
+        setContentView(R.layout.activity_event_listtemp);
 
-        // Set up the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Enable the Up (Back) button in the toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Show the back button
         }
 
-        // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerViewEvents);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Initialize eventList with Event objects
         eventList = new ArrayList<>();
-        eventList.add(new Event("Ultra Music Festival", "March 22-24, 2024", "Music Festival"));
-        eventList.add(new Event("Rock the World", "March 3, 2024", "Music Festival"));
+        eventList.add(new Event("Basketball Finals", "February 2, 2024", "Sports"));
+        eventList.add(new Event("Formula 1 Grand Prix", "September 29, 2024", "Sports"));
+        eventList.add(new Event("NBA Finals 2024", "June 12, 2024", "Sports"));
+        eventList.add(new Event("Wimbledon 2024 (Men's Final)", "July 7, 2024", "Sports"));
+        eventList.add(new Event("FIFA World Cup Qualifiers", "October 18, 2024", "Sports"));
 
-
-        // Set up the adapter
         eventAdapter = new EventAdapter(eventList);
         recyclerView.setAdapter(eventAdapter);
 
-        // Set up the ItemClickListener to handle the event item click
         eventAdapter.setOnItemClickListener(new EventAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                // Get the clicked event data
                 Event clickedEvent = eventList.get(position);
 
-                // Create an Intent to open BookingActivity
-                Intent intent = new Intent(OtherActivity.this, BookingActivity.class);
+                Intent intent = new Intent(ActivitySporttemp.this, BookingActivitytemp.class);
 
-                // Pass the event data to BookingActivity
                 intent.putExtra("EVENT_NAME", clickedEvent.getName());
                 intent.putExtra("CATEGORY", clickedEvent.getCategory());
-                intent.putExtra("CURRENT_ACTIVITY", "OtherActivity");  // Pass the current activity name
+                intent.putExtra("CURRENT_ACTIVITY", "ActivitySport");
 
-                // Start the BookingActivity
                 startActivity(intent);
             }
         });
@@ -68,9 +60,8 @@ public class OtherActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle the action of the back button
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(OtherActivity.this, MainActivity.class); // Go back to MainActivity
+            Intent intent = new Intent(ActivitySporttemp.this, MainActivitytemp.class); // Go back to MainActivity
             startActivity(intent);
             finish();
             return true;

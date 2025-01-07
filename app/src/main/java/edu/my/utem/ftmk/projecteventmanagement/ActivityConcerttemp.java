@@ -1,7 +1,6 @@
 package edu.my.utem.ftmk.projecteventmanagement;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,13 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class ActivityConcert extends AppCompatActivity {
+public class ActivityConcerttemp extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
@@ -27,7 +22,7 @@ public class ActivityConcert extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_list);
+        setContentView(R.layout.activity_event_listtemp);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,7 +47,7 @@ public class ActivityConcert extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 Event clickedEvent = eventList.get(position);
 
-                Intent intent = new Intent(ActivityConcert.this, BookingActivity.class);
+                Intent intent = new Intent(ActivityConcerttemp.this, BookingActivitytemp.class);
                 intent.putExtra("EVENT_NAME", clickedEvent.getName());
                 intent.putExtra("CATEGORY", clickedEvent.getCategory());
                 intent.putExtra("CURRENT_ACTIVITY", "ActivityConcert");  // Pass the current activity name
@@ -65,7 +60,7 @@ public class ActivityConcert extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(ActivityConcert.this, MainActivity.class);
+            Intent intent = new Intent(ActivityConcerttemp.this, MainActivitytemp.class);
             startActivity(intent);
             finish();
             return true;

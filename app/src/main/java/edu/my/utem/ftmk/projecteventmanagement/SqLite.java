@@ -27,7 +27,9 @@ public class SqLite extends SQLiteOpenHelper {
                 "UserId INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "email TEXT NOT NULL, " +
                 "password TEXT NOT NULL, " +
-                "username TEXT NOT NULL);";
+                "username TEXT NOT NULL, " +
+                "ic TEXT NOT NULL, " +
+                "role TEXT NOT NULL);";
 
         String createEventTypeTable = "CREATE TABLE eventType (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -38,14 +40,16 @@ public class SqLite extends SQLiteOpenHelper {
                 "eventtypeId INTEGER, " +
                 "eventtypename TEXT, " +
                 "eventdate DATE, " +
+                "eventprice DOUBLE, " +
                 "FOREIGN KEY (eventtypeId) REFERENCES eventType(id));";
 
         String createBookingTable = "CREATE TABLE booking (" +
                 "bookingId INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "BookingName TEXT NOT NULL, " +
-                "eventtypeId INTEGER, " +
                 "userId INTEGER, " +
-                "FOREIGN KEY (eventtypeId) REFERENCES eventType(id), " +
+                "eventId INTEGER, " +
+                "bookingdate DATE, " +
+                "bookingprice DOUBLE, " +
+                "FOREIGN KEY (eventId) REFERENCES eventType(id), " +
                 "FOREIGN KEY (userId) REFERENCES user(UserId));";
 
         db.execSQL(createUser);
@@ -55,20 +59,20 @@ public class SqLite extends SQLiteOpenHelper {
 
         //region default value
         //user
-        db.execSQL("INSERT INTO user (email, password, username) VALUES ('test@example.com', '1234', 'testuser');");
+        db.execSQL("INSERT INTO user (email, password, username, ic, role) VALUES ('admin', 'admin', 'admin', '01', 'admin');");
 
         //main event type
-        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Concerts');");
-        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Sports');");
-        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Theater');");
-        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Other Events');");
-
-        //concerts
-        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Concert at Madison Square Garden','2024-01-15');");
-        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Coldplay World Tour 2024','2024-03-15');");
-        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Adele Live in Concert','2024-03-15');");
-        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','BTS Comeback Tour','2024-06-05');");
-        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Taylor Swift Eras Tour','2024-07-10');");
+//        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Concerts');");
+//        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Sports');");
+//        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Theater');");
+//        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Other Events');");
+//
+//        //concerts
+//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Concert at Madison Square Garden','2024-01-15');");
+//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Coldplay World Tour 2024','2024-03-15');");
+//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Adele Live in Concert','2024-03-15');");
+//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','BTS Comeback Tour','2024-06-05');");
+//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Taylor Swift Eras Tour','2024-07-10');");
         //endregion
     }
 
@@ -88,6 +92,8 @@ public class SqLite extends SQLiteOpenHelper {
         val.put("username",user.getName());
         val.put("email",user.getEmail());
         val.put("password",user.getPassword());
+        val.put("ic", user.getIc());
+        val.put("role", "user");
 
         long id = db.insert("user",null, val);
         db.close();
@@ -95,18 +101,23 @@ public class SqLite extends SQLiteOpenHelper {
         return id;
     }
 
-    public long login(String email, String Password){
-        long id = 0;
-        String query = "SELECT * FROM user WHERE email = '"+email+"' AND password = '"+Password+"'";
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query,null);
+    public UserSession login(String email, String password) {
+        UserSession userSession = null;
+        String query = "SELECT UserId, role FROM user WHERE email = ? AND password = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{email, password});
 
-        if(cursor.moveToFirst()){
-            id = cursor.getInt(cursor.getColumnIndexOrThrow("UserId"));
+        if (cursor.moveToFirst()) {
+            int userId = cursor.getInt(cursor.getColumnIndexOrThrow("UserId"));
+            String role = cursor.getString(cursor.getColumnIndexOrThrow("role"));
+            userSession = new UserSession(userId, role);
         }
 
-        return id;
+        cursor.close();
+        db.close();
+        return userSession; // Return user ID and role
     }
+
 
     public List<EventType> getEventCategories() {
         List<EventType> categories = new ArrayList<>();

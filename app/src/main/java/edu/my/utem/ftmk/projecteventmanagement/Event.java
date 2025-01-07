@@ -5,6 +5,7 @@ public class Event {
     private String name;
     private String date;
     private String category;
+    private double price;
 
     public Event(String name, String date, String category) {
         this.name = name;
