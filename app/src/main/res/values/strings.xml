@@ -2,5 +2,5 @@
     <string name="app_name">Project Event Management</string>
     <string name="nav_open">Open Navigation</string>
     <string name="nav_close">Close Navigation</string>
-    <string name="api_toyyibpay">https://192.168.0.28/BackEnd-APi/MedRec/toyyibpay.php</string>
+    <string name="api_toyyibpay">http://192.168.0.28/Project/toyyibpay.php</string>
 </resources>

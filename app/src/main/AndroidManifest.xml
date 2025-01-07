@@ -25,27 +25,19 @@
         <activity
             android:name=".UserBooking"
             android:exported="false" />
-        <activity
-            android:name=".OtherActivitytemp"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityTheatertemp"
-            android:exported="false" />
+        <activity android:name=".UserReceipt"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="yourapp" android:host="payment-complete" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".UserEvent"
             android:exported="false" />
-        <activity
-            android:name=".ActivitySporttemp"
-            android:exported="false" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EventListActivitytemp"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivitytemp"
-            android:exported="true" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">
