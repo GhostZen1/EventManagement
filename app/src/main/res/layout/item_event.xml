@@ -42,6 +42,15 @@
             android:textColor="@color/dimgray"
             android:layout_marginTop="4dp"/>
 
+        <TextView
+            android:id="@+id/tvEventPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event Price"
+            android:textSize="14sp"
+            android:textColor="@color/dimgray"
+            android:layout_marginTop="4dp"/>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookingActivitytemp">
+    tools:context=".UserBooking">
 
     <!-- Toolbar with Back Icon -->
     <androidx.appcompat.widget.Toolbar
@@ -54,48 +54,73 @@
                 android:textSize="18sp"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Name Input Field -->
-            <EditText
-                android:id="@+id/etName"
-                android:layout_width="match_parent"
+            <!-- Price -->
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Enter Your Name"
-                android:inputType="textPersonName"
+                android:text="Price"
+                android:textSize="18sp"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Email Input Field -->
-            <EditText
-                android:id="@+id/etEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Your Email"
-                android:inputType="textEmailAddress"
-                android:layout_marginBottom="8dp" />
+<!--            &lt;!&ndash; Name Input Field &ndash;&gt;-->
+<!--            <EditText-->
+<!--                android:id="@+id/etName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Enter Your Name"-->
+<!--                android:inputType="textPersonName"-->
+<!--                android:layout_marginBottom="8dp" />-->
 
-            <!-- Phone Number Input Field -->
-            <EditText
-                android:id="@+id/etPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Your Phone Number"
-                android:inputType="phone"
-                android:layout_marginBottom="8dp" />
+<!--            &lt;!&ndash; Email Input Field &ndash;&gt;-->
+<!--            <EditText-->
+<!--                android:id="@+id/etEmail"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Enter Your Email"-->
+<!--                android:inputType="textEmailAddress"-->
+<!--                android:layout_marginBottom="8dp" />-->
 
-            <!-- IC Number Input Field -->
-            <EditText
-                android:id="@+id/etIC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Your IC Number"
-                android:inputType="text"
-                android:layout_marginBottom="8dp" />
+<!--            &lt;!&ndash; Phone Number Input Field &ndash;&gt;-->
+<!--            <EditText-->
+<!--                android:id="@+id/etPhone"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Enter Your Phone Number"-->
+<!--                android:inputType="phone"-->
+<!--                android:layout_marginBottom="8dp" />-->
+
+<!--            &lt;!&ndash; IC Number Input Field &ndash;&gt;-->
+<!--            <EditText-->
+<!--                android:id="@+id/etIC"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Enter Your IC Number"-->
+<!--                android:inputType="text"-->
+<!--                android:layout_marginBottom="8dp" />-->
 
             <!-- Seat Selection Spinner -->
-            <Spinner
-                android:id="@+id/spinnerSeats"
+            <!-- Slot Selection Input -->
+            <EditText
+                android:id="@+id/etSlot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Enter Slot Number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp"
+                android:textSize="16sp" />
+
+            <!-- Price -->
+            <TextView
+                android:id="@+id/tvTotalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Price"
+                android:textSize="18sp"
                 android:layout_marginBottom="8dp" />
+
 
             <!-- Confirm Booking Button -->
             <Button

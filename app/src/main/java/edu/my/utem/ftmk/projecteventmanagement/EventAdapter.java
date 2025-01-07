@@ -20,13 +20,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     // ViewHolder to hold each item view
     public static class EventViewHolder extends RecyclerView.ViewHolder {
-        public TextView eventName, eventDate, eventCategory;
+        public TextView eventName, eventDate, eventCategory, eventPrice;
 
         public EventViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             eventName = itemView.findViewById(R.id.tvEventName); // Assuming you have these IDs in the layout
             eventDate = itemView.findViewById(R.id.tvEventDate);
             eventCategory = itemView.findViewById(R.id.tvEventCategory);
+            eventPrice = itemView.findViewById(R.id.tvEventPrice);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -56,6 +57,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.eventName.setText(event.getName());
         holder.eventDate.setText(event.getDate());
         holder.eventCategory.setText(event.getCategory());
+        holder.eventPrice.setText(String.valueOf(event.getPrice()));
     }
 
     @Override

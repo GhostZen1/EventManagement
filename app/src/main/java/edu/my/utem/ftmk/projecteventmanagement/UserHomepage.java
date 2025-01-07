@@ -84,44 +84,20 @@ public class UserHomepage extends AppCompatActivity{
         buttonContainer = findViewById(R.id.buttonContainer);
         dbHelper = new SqLite(this);
 
+        // Fetch event categories from the database
         List<EventType> categories = dbHelper.getEventCategories();
         for (EventType event : categories) {
             Button button = new Button(this);
             button.setText(event.getName());
-            button.setOnClickListener(v -> openEventCategory(event.getId(), event.getName()));
+            button.setOnClickListener(v -> {
+                // Open UserEvent activity with the event type ID
+                Intent intent = new Intent(UserHomepage.this, UserEvent.class);
+                intent.putExtra("eventTypeId", event.getId());
+                startActivity(intent);
+            });
             buttonContainer.addView(button);
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
-    private void openEventCategory(int id, String name) {
-        Class<?> activityClass;
-
-        switch (name) {
-            case "Concerts":
-                activityClass = ActivityConcerttemp.class;
-                break;
-            case "Sports":
-                activityClass = ActivitySporttemp.class;
-                break;
-            case "Theater":
-                activityClass = ActivityTheatertemp.class;
-                break;
-            default:
-                activityClass = OtherActivitytemp.class;
-                break;
-        }
-
-        Intent intent = new Intent(UserHomepage.this, activityClass);
-        intent.putExtra("CATEGORY_ID", id); // Pass ID
-        intent.putExtra("CATEGORY_NAME", name); // Pass Name
-        startActivity(intent);
-    }
 }

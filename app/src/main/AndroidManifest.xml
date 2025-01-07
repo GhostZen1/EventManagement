@@ -23,7 +23,7 @@
             android:name=".AdminHomepage"
             android:exported="false" />
         <activity
-            android:name=".BookingActivitytemp"
+            android:name=".UserBooking"
             android:exported="false" />
         <activity
             android:name=".OtherActivitytemp"
@@ -32,7 +32,7 @@
             android:name=".ActivityTheatertemp"
             android:exported="false" />
         <activity
-            android:name=".ActivityConcerttemp"
+            android:name=".UserEvent"
             android:exported="false" />
         <activity
             android:name=".ActivitySporttemp"

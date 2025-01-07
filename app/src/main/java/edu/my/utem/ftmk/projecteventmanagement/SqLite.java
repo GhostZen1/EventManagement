@@ -39,6 +39,7 @@ public class SqLite extends SQLiteOpenHelper {
                 "eventId INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "eventtypeId INTEGER, " +
                 "eventtypename TEXT, " +
+                "eventname INTEGER, " +
                 "eventdate DATE, " +
                 "eventprice DOUBLE, " +
                 "FOREIGN KEY (eventtypeId) REFERENCES eventType(id));";
@@ -57,23 +58,15 @@ public class SqLite extends SQLiteOpenHelper {
         db.execSQL(createEventTable);
         db.execSQL(createBookingTable);
 
-        //region default value
         //user
         db.execSQL("INSERT INTO user (email, password, username, ic, role) VALUES ('admin', 'admin', 'admin', '01', 'admin');");
-
+        db.execSQL("INSERT INTO user (email, password, username, ic, role) VALUES ('1', '1', '1', '1', 'user');");
         //main event type
-//        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Concerts');");
-//        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Sports');");
-//        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Theater');");
-//        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Other Events');");
+        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Concerts');");
+
+        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventname,eventdate,eventprice) VALUES ('1','Concerts','Concert at Madison Square Garden','2024-01-15',16.00);");
+        db.execSQL("INSERT INTO booking (userId,eventId,bookingdate,bookingprice) VALUES ('2','1','2024-01-15',16.00);");
 //
-//        //concerts
-//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Concert at Madison Square Garden','2024-01-15');");
-//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Coldplay World Tour 2024','2024-03-15');");
-//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Adele Live in Concert','2024-03-15');");
-//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','BTS Comeback Tour','2024-06-05');");
-//        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventdate) VALUES ('1','Taylor Swift Eras Tour','2024-07-10');");
-        //endregion
     }
 
 
@@ -137,40 +130,26 @@ public class SqLite extends SQLiteOpenHelper {
         return categories;
     }
 
-    public List<Event> fetchEventsDetail() {
+    public List<Event> fetchEventsByType(int eventTypeId) {
         List<Event> events = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT e.eventtypename, e.eventdate, et.eventtypename AS category " +
-                "FROM event e " +
-                "INNER JOIN eventType et ON e.eventtypeId = et.id";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        SimpleDateFormat outputFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+        String query = "SELECT * FROM event WHERE eventtypeId = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(eventTypeId)});
 
         if (cursor.moveToFirst()) {
             do {
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("eventtypename"));
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("eventId")));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("eventname"));
                 String date = cursor.getString(cursor.getColumnIndexOrThrow("eventdate"));
-                String category = cursor.getString(cursor.getColumnIndexOrThrow("category"));
-
-                // Convert the date to the required format
-                try {
-                    Date parsedDate = inputFormat.parse(date);  // Parse the date
-                    String formattedDate = outputFormat.format(parsedDate);  // Format the date
-
-                    // Add event to the list
-                    events.add(new Event(name, formattedDate, category));
-                } catch (ParseException e) {
-                    e.printStackTrace();  // Handle any date parsing errors
-                }
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow("eventprice"));
+                String eventtypename = cursor.getString(cursor.getColumnIndexOrThrow("eventtypename"));
+                events.add(new Event(id, name, date, eventtypename, price)); // Replace null with the category if needed
             } while (cursor.moveToNext());
         }
 
         cursor.close();
         db.close();
-
         return events;
     }
+
 }
