@@ -7,13 +7,15 @@ public class Event {
     private String date;
     private String category;
     private double price;
+    private String eventImage;
 
-    public Event(int id, String name, String date, String category, Double price) {
+    public Event(int id, String name, String date, String category, Double price, String eventImage) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.category = category;
         this.price = price;
+        this.eventImage = eventImage;
     }
 
     public int getId() {
@@ -30,5 +32,8 @@ public class Event {
     }
     public double getPrice() {
         return price;
+    }
+    public String getEventImage() {
+        return eventImage;
     }
 }

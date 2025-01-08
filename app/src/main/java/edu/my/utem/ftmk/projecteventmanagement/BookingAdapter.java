@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class UserBookingAdapter extends RecyclerView.Adapter<UserBookingAdapter.UserBookingViewHolder> {
+public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.UserBookingViewHolder> {
 
     private EventAdapter.OnItemClickListener Listener;
 

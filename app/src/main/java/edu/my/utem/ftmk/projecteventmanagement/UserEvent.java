@@ -52,6 +52,7 @@ public class UserEvent extends AppCompatActivity {
             intent.putExtra("EVENT_NAME", clickedEvent.getName());
             intent.putExtra("EVENT_PRICE", clickedEvent.getPrice());
             intent.putExtra("CATEGORY", clickedEvent.getCategory());
+            intent.putExtra("EVENT_IMAGE", clickedEvent.getEventImage());
             startActivity(intent);
         });
     }

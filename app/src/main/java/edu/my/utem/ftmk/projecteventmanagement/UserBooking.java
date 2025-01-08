@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
@@ -23,6 +24,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +39,8 @@ public class UserBooking extends AppCompatActivity {
     private EditText slotInput;
     private double eventPrice, totalPrice;
     private Button btnConfirmBooking;
+    private int userId, eventId, slotNumber;
+    private ImageView eventImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,7 @@ public class UserBooking extends AppCompatActivity {
         setContentView(R.layout.user_booking);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("userId", -1); // Default is -1 if no user ID is found
+        userId = sharedPreferences.getInt("userId", -1); // Default is -1 if no user ID is found
 
         // Initialize the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -50,6 +56,8 @@ public class UserBooking extends AppCompatActivity {
 
         // Enable back navigation
         toolbar.setNavigationOnClickListener(v -> finish());
+
+        eventImage = findViewById(R.id.eventImage);
 
         // Initialize the TextViews
         tvEventName = findViewById(R.id.tvEventName);
@@ -65,12 +73,15 @@ public class UserBooking extends AppCompatActivity {
         eventPrice = getIntent().getDoubleExtra("EVENT_PRICE", 0.0);
         String eventName = getIntent().getStringExtra("EVENT_NAME");
         String category = getIntent().getStringExtra("CATEGORY");
-        int eventId = getIntent().getIntExtra("EVENT_ID", -1);
+        eventId = getIntent().getIntExtra("EVENT_ID", -1);
+        String eventImage = getIntent().getStringExtra("EVENT_IMAGE");
 
         // Set the data to the TextViews
         tvPrice.setText("Price: RM " + eventPrice);
         tvEventName.setText("Event: " + eventName);
         tvCategory.setText("Category: " + category);
+
+        loadImageFromName(eventImage);
 
         // Add a TextWatcher to calculate the total price dynamically
         slotInput.addTextChangedListener(new TextWatcher() {
@@ -96,10 +107,41 @@ public class UserBooking extends AppCompatActivity {
         });
     }
 
+
+    // Method to load the event image
+    private void loadImageFromName(String imageName) {
+        if (imageName != null && !imageName.isEmpty()) {
+            // Extract the base name by removing the file extension
+            String baseName = imageName.replaceFirst("\\.[^.]+$", ""); // Removes file extension
+
+            // Get the resource ID for the drawable
+            int resId = getResources().getIdentifier(baseName, "drawable", getPackageName());
+
+            // Use Glide to load the image from drawable resource if it exists
+            if (resId != 0) {
+                Glide.with(this)
+                        .load(resId) // Load image from drawable resource
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(eventImage); // Set the image into the ImageView
+            } else {
+                Glide.with(this)
+                        .load(R.drawable.placeholder) // Fallback to a placeholder image if not found
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(eventImage); // Set the placeholder image into the ImageView
+            }
+        } else {
+            // Fallback if image name is empty or null
+            Glide.with(this)
+                    .load(R.drawable.placeholder) // Use placeholder
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(eventImage); // Set the placeholder image
+        }
+    }
+
     private void updateTotalPrice(String input) {
         if (!input.isEmpty()) {
             try {
-                int slotNumber = Integer.parseInt(input);
+                slotNumber = Integer.parseInt(input);
                 totalPrice = slotNumber * eventPrice;
                 tvTotalPrice.setText(String.format("Total Price: RM %.2f", totalPrice));
             } catch (NumberFormatException e) {
@@ -131,6 +173,18 @@ public class UserBooking extends AppCompatActivity {
                                 Log.d("ToyyibpayResponse", "Payment URL found: " + paymentUrl); // Log the payment URL
 
                                 if (paymentUrl != null) {
+                                    // Save userId, eventId, and booking price to SharedPreferences
+                                    SharedPreferences sharedPreferences = getSharedPreferences("UserBookingPrefs", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                    // Save these values for later use
+                                    editor.putInt("userId", userId);
+                                    editor.putInt("eventId", eventId);
+                                    editor.putInt("slotNumber", slotNumber);
+                                    editor.putFloat("bookingPrice", (float) totalPrice); // Save totalPrice as a float
+                                    editor.apply();
+                                    Log.d("SharedPreferences", "Saved userId: " + userId + ", eventId: " + eventId + ", bookingPrice: " + totalPrice);
+
                                     // Redirect user to Toyyibpay's payment page
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(paymentUrl));
                                     startActivity(browserIntent);
