@@ -33,7 +33,8 @@ public class SqLite extends SQLiteOpenHelper {
 
         String createEventTypeTable = "CREATE TABLE eventType (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "eventtypename TEXT NOT NULL);";
+                "eventtypename TEXT NOT NULL, " +
+                "eventtypeImage TEXT NOT NULL);";
 
         String createEventTable = "CREATE TABLE event (" +
                 "eventId INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -42,6 +43,7 @@ public class SqLite extends SQLiteOpenHelper {
                 "eventname INTEGER, " +
                 "eventdate DATE, " +
                 "eventprice DOUBLE, " +
+                "eventImage TEXT NOT NULL, " +
                 "FOREIGN KEY (eventtypeId) REFERENCES eventType(id));";
 
         String createBookingTable = "CREATE TABLE booking (" +
@@ -50,6 +52,7 @@ public class SqLite extends SQLiteOpenHelper {
                 "eventId INTEGER, " +
                 "bookingdate DATE, " +
                 "bookingprice DOUBLE, " +
+                "slotNumber INTEGER," +
                 "FOREIGN KEY (eventId) REFERENCES eventType(id), " +
                 "FOREIGN KEY (userId) REFERENCES user(UserId));";
 
@@ -62,10 +65,12 @@ public class SqLite extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO user (email, password, username, ic, role) VALUES ('admin', 'admin', 'admin', '01', 'admin');");
         db.execSQL("INSERT INTO user (email, password, username, ic, role) VALUES ('1', '1', '1', '1', 'user');");
         //main event type
-        db.execSQL("INSERT INTO eventType (eventtypename) VALUES ('Concerts');");
+        db.execSQL("INSERT INTO eventType (eventtypename, eventtypeImage) VALUES ('Concerts','concert.jpeg');");
+        db.execSQL("INSERT INTO eventType (eventtypename, eventtypeImage) VALUES ('Sport','sport.jpg');");
 
-        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventname,eventdate,eventprice) VALUES ('1','Concerts','Concert at Madison Square Garden','2024-01-15',16.00);");
-        db.execSQL("INSERT INTO booking (userId,eventId,bookingdate,bookingprice) VALUES ('2','1','2024-01-15',16.00);");
+        db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventname,eventdate,eventprice,eventImage) VALUES ('1','Concerts','Concert at Madison Square Garden','2024-01-15',16.00,'madison.jpg');");
+        db.execSQL("INSERT INTO booking (userId,eventId,bookingdate,bookingprice, slotNumber) VALUES ('2','1','2024-01-15',16.00,2);");
+//
     }
 
 
@@ -114,13 +119,14 @@ public class SqLite extends SQLiteOpenHelper {
     public List<EventType> getEventCategories() {
         List<EventType> categories = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM  eventType" , null);
+        Cursor cursor = db.rawQuery("SELECT * FROM eventType", null);
 
         if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("eventtypename"));
-                categories.add(new EventType(id, name));
+                String imageName = cursor.getString(cursor.getColumnIndexOrThrow("eventtypeImage"));
+                categories.add(new EventType(id, name, imageName));
             } while (cursor.moveToNext());
         }
 
@@ -128,6 +134,7 @@ public class SqLite extends SQLiteOpenHelper {
         db.close();
         return categories;
     }
+
 
     public List<Event> fetchEventsByType(int eventTypeId) {
         List<Event> events = new ArrayList<>();
@@ -142,7 +149,9 @@ public class SqLite extends SQLiteOpenHelper {
                 String date = cursor.getString(cursor.getColumnIndexOrThrow("eventdate"));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow("eventprice"));
                 String eventtypename = cursor.getString(cursor.getColumnIndexOrThrow("eventtypename"));
-                events.add(new Event(id, name, date, eventtypename, price));
+                String eventImage = cursor.getString(cursor.getColumnIndexOrThrow("eventImage"));  // Fetch the event image name
+
+                events.add(new Event(id, name, date, eventtypename, price, eventImage)); // Include the image
             } while (cursor.moveToNext());
         }
 
@@ -150,5 +159,101 @@ public class SqLite extends SQLiteOpenHelper {
         db.close();
         return events;
     }
+
+
+    public long addBooking(int userId, int eventId, float bookingPrice, int slotNumber) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        // Prepare the booking data
+        values.put("userId", userId);
+        values.put("eventId", eventId);
+        values.put("bookingprice", bookingPrice);
+        values.put("slotNumber", slotNumber);
+
+        // Get the current date in the required format
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        values.put("bookingdate", currentDate);
+
+        // Insert the booking data into the database
+        long bookingId = db.insert("booking", null, values);
+
+        db.close(); // Close the database connection
+        return bookingId; // Return the ID of the newly inserted booking
+    }
+
+    public User getUserDetails(int userId) {
+        User user = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM user WHERE UserId = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+            String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+            String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+            String ic = cursor.getString(cursor.getColumnIndexOrThrow("ic"));
+            String role = cursor.getString(cursor.getColumnIndexOrThrow("role"));
+
+            // Create a User object and set the values
+            user = new User(email, password, username, ic, role);
+        }
+
+        cursor.close();
+        db.close();
+        return user;
+    }
+
+    public boolean updateUserDetails(int userId, String name, String password, String email, String ic) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        // Insert the updated user data
+        contentValues.put("username", name);
+        contentValues.put("password", password);
+        contentValues.put("email", email);
+        contentValues.put("ic", ic);
+
+        // Update the user details where UserId matches
+        int rowsUpdated = db.update("user", contentValues, "UserId = ?", new String[]{String.valueOf(userId)});
+
+        db.close();
+
+        // Return true if the update was successful (at least one row updated)
+        return rowsUpdated > 0;
+    }
+
+    public Event getEventDetailsByBookingId(int bookingId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Event event = null;
+
+        // Query to join the booking, event, and eventType tables to get event details
+        String query = "SELECT e.eventname, e.eventdate, e.eventprice, et.eventtypename " +
+                "FROM booking b " +
+                "JOIN event e ON b.eventId = e.eventId " +
+                "JOIN eventType et ON e.eventtypeId = et.id " +
+                "WHERE b.bookingId = ?";
+
+        // Execute the query
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(bookingId)});
+
+        if (cursor.moveToFirst()) {
+            int eventId = cursor.getInt(cursor.getColumnIndexOrThrow("eventId"));
+            String eventName = cursor.getString(cursor.getColumnIndexOrThrow("eventname"));
+            String eventDate = cursor.getString(cursor.getColumnIndexOrThrow("eventdate"));
+            double eventPrice = cursor.getDouble(cursor.getColumnIndexOrThrow("eventprice"));
+            String eventTypeName = cursor.getString(cursor.getColumnIndexOrThrow("eventtypename"));
+            String eventImage = cursor.getString(cursor.getColumnIndexOrThrow("eventImage"));
+
+            // Create the Event object and set the retrieved details
+            event = new Event(eventId, eventName, eventDate, eventTypeName, eventPrice, eventImage);
+        }
+
+        cursor.close();
+        db.close();
+        return event; // Return the event details
+    }
+
+
 
 }

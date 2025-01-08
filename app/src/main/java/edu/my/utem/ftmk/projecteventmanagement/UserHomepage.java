@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class UserHomepage extends AppCompatActivity{
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,28 +35,18 @@ public class UserHomepage extends AppCompatActivity{
         setContentView(R.layout.user_homepage);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("userId", -1); // Default is -1 if no user ID is found
+        userId = sharedPreferences.getInt("userId", -1);
         Log.d("UserHomepage", "User ID from SharedPreferences: " + userId);
 
         // Set up DrawerLayout and Toolbar
         drawerLayout = findViewById(R.id.myDrawerLayout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Set up ActionBarDrawerToggle
-        actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
-        // Enable home button (hamburger icon) in action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Ensure the hamburger icon is visible in the ActionBar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
-        // Set up navigation view
         navigationView = findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(item -> {
             Intent intent;
@@ -63,14 +55,11 @@ public class UserHomepage extends AppCompatActivity{
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_profile) {
-                Toast.makeText(UserHomepage.this, "Profile", Toast.LENGTH_SHORT).show();
-//                intent = new Intent(MainActivity.this, EventCategoriesActivity.class);
-//                startActivity(intent);
+                intent = new Intent(UserHomepage.this, UserProfile.class);
+                startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_booking_history) {
                 Toast.makeText(UserHomepage.this, "Booking History", Toast.LENGTH_SHORT).show();
-//                intent = new Intent(MainActivity.this, SettingsActivity.class);
-//                startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_logout) {
                 // Handle logout here
@@ -79,7 +68,6 @@ public class UserHomepage extends AppCompatActivity{
             return false;
         });
 
-
         // Set up button container for event categories
         buttonContainer = findViewById(R.id.buttonContainer);
         dbHelper = new SqLite(this);
@@ -87,6 +75,26 @@ public class UserHomepage extends AppCompatActivity{
         // Fetch event categories from the database
         List<EventType> categories = dbHelper.getEventCategories();
         for (EventType event : categories) {
+            // Add ImageView for the event type image
+            ImageView imageView = new ImageView(this);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    600)); // Set height for the image
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            // Extract the base name by removing the file extension
+            String baseName = event.getImageName().replaceFirst("\\.[^.]+$", ""); // Removes file extension
+            int resId = getResources().getIdentifier(baseName, "drawable", getPackageName());
+
+            if (resId != 0) {
+                imageView.setImageResource(resId); // Load image from drawable
+            } else {
+                imageView.setImageResource(R.drawable.placeholder); // Fallback image if not found
+            }
+
+            buttonContainer.addView(imageView); // Add ImageView to the container
+
+            // Add Button for the event type
             Button button = new Button(this);
             button.setText(event.getName());
             button.setOnClickListener(v -> {
@@ -95,9 +103,11 @@ public class UserHomepage extends AppCompatActivity{
                 intent.putExtra("eventTypeId", event.getId());
                 startActivity(intent);
             });
-            buttonContainer.addView(button);
+
+            buttonContainer.addView(button); // Add Button to the container
         }
     }
+
 
 
 }

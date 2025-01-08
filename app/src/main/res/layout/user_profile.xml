@@ -87,7 +87,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="User Password"
-                android:inputType="text" />
+                android:inputType="textPassword" />
 
         </LinearLayout>
 
