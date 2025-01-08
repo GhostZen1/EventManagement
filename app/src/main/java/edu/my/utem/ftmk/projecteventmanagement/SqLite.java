@@ -66,6 +66,7 @@ public class SqLite extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventname,eventdate,eventprice) VALUES ('1','Concerts','Concert at Madison Square Garden','2024-01-15',16.00);");
         db.execSQL("INSERT INTO booking (userId,eventId,bookingdate,bookingprice) VALUES ('2','1','2024-01-15',16.00);");
+//
     }
 
 
@@ -142,7 +143,7 @@ public class SqLite extends SQLiteOpenHelper {
                 String date = cursor.getString(cursor.getColumnIndexOrThrow("eventdate"));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow("eventprice"));
                 String eventtypename = cursor.getString(cursor.getColumnIndexOrThrow("eventtypename"));
-                events.add(new Event(id, name, date, eventtypename, price));
+                events.add(new Event(id, name, date, eventtypename, price)); // Replace null with the category if needed
             } while (cursor.moveToNext());
         }
 

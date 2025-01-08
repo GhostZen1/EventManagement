@@ -17,6 +17,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AdminManageBooking"
+            android:exported="false" />
+        <activity
+            android:name=".AdminManageEvent"
+            android:exported="false" />
+        <activity
+            android:name=".AdminEventType"
+            android:exported="false" />
+        <activity
             android:name=".UserBookingHistory"
             android:exported="false" />
         <activity

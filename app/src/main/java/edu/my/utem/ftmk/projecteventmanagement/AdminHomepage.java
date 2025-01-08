@@ -32,29 +32,26 @@ public class AdminHomepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_homepage);
 
+        // Shared preferences for user details
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1); // Default is -1 if no user ID is found
         Log.d("AdminHomepage", "User ID from SharedPreferences: " + userId);
 
-        // Set up DrawerLayout and Toolbar
+        // Toolbar and DrawerLayout setup
         drawerLayout = findViewById(R.id.myDrawerLayout);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar); // Set toolbar as ActionBar
 
-        // Set up ActionBarDrawerToggle
+        // Set custom navigation icon (optional, replace if missing)
+        toolbar.setNavigationIcon(R.drawable.outline_calendar_view_day_24);
+
+        // Drawer Toggle
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
+        actionBarDrawerToggle.syncState(); // Sync the toggle state
 
-        // Enable home button (hamburger icon) in action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Ensure the hamburger icon is visible in the ActionBar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        // Set up navigation view
+        // Navigation View setup
         navigationView = findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(item -> {
             Intent intent;
@@ -63,28 +60,27 @@ public class AdminHomepage extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_eventType) {
-                Toast.makeText(AdminHomepage.this, "Event Type", Toast.LENGTH_SHORT).show();
-//                intent = new Intent(MainActivity.this, EventCategoriesActivity.class);
-//                startActivity(intent);
+                intent = new Intent(AdminHomepage.this, AdminEventType.class);
+                startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_event) {
                 Toast.makeText(AdminHomepage.this, "Event", Toast.LENGTH_SHORT).show();
-//                intent = new Intent(AdminHomepage.this, SettingsActivity.class);
-//                startActivity(intent);
+                intent = new Intent(AdminHomepage.this, AdminManageEvent.class);
+                startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_booking) {
                 Toast.makeText(AdminHomepage.this, "Booking", Toast.LENGTH_SHORT).show();
-//                intent = new Intent(AdminHomepage.this, SettingsActivity.class);
-//                startActivity(intent);
+                intent = new Intent(AdminHomepage.this, AdminManageBooking.class);
+                startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_logout) {
-                // Handle logout here
+                intent = new Intent(AdminHomepage.this, LoginActivity.class);
+                startActivity(intent);
                 return true;
             }
             return false;
         });
-
-
     }
+
 
 }
