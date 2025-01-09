@@ -70,6 +70,9 @@ public class SqLite extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO event (eventtypeId,eventtypename,eventname,eventdate,eventprice,eventImage) VALUES ('1','Concerts','Concert at Madison Square Garden','2024-01-15',16.00,'madison.jpg');");
         db.execSQL("INSERT INTO booking (userId,eventId,bookingdate,bookingprice, slotNumber) VALUES ('2','1','2024-01-15',16.00,2);");
+        db.execSQL("INSERT INTO booking (userId,eventId,bookingdate,bookingprice, slotNumber) VALUES ('2','1','2024-01-15',16.00,2);");
+        db.execSQL("INSERT INTO booking (userId,eventId,bookingdate,bookingprice, slotNumber) VALUES ('2','1','2024-01-15',16.00,2);");
+        db.execSQL("INSERT INTO booking (userId,eventId,bookingdate,bookingprice, slotNumber) VALUES ('2','1','2024-01-15',16.00,2);");
 //
     }
 
@@ -228,11 +231,12 @@ public class SqLite extends SQLiteOpenHelper {
         Event event = null;
 
         // Query to join the booking, event, and eventType tables to get event details
-        String query = "SELECT e.eventname, e.eventdate, e.eventprice, et.eventtypename " +
+        String query = "SELECT e.eventId, e.eventname, e.eventdate, e.eventprice, et.eventtypename, e.eventImage " +
                 "FROM booking b " +
                 "JOIN event e ON b.eventId = e.eventId " +
                 "JOIN eventType et ON e.eventtypeId = et.id " +
                 "WHERE b.bookingId = ?";
+
 
         // Execute the query
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(bookingId)});
@@ -253,6 +257,38 @@ public class SqLite extends SQLiteOpenHelper {
         db.close();
         return event; // Return the event details
     }
+
+    public List<Booking> getBookingHistory(int userId) {
+        List<Booking> bookings = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT b.bookingId, e.eventname, et.eventtypename, e.eventprice, b.bookingdate, b.bookingprice, b.slotNumber, e.eventImage " +
+                "FROM booking b " +
+                "JOIN event e ON b.eventId = e.eventId " +
+                "JOIN eventType et ON e.eventtypeId = et.id " +
+                "WHERE b.userId = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int bookingId = cursor.getInt(cursor.getColumnIndexOrThrow("bookingId"));
+                String eventName = cursor.getString(cursor.getColumnIndexOrThrow("eventname"));
+                String eventCategory = cursor.getString(cursor.getColumnIndexOrThrow("eventtypename"));
+                double eventPrice = cursor.getDouble(cursor.getColumnIndexOrThrow("eventprice"));
+                String bookingDate = cursor.getString(cursor.getColumnIndexOrThrow("bookingdate"));
+                double bookingPrice = cursor.getDouble(cursor.getColumnIndexOrThrow("bookingprice"));
+                int bookingSlot = cursor.getInt(cursor.getColumnIndexOrThrow("slotNumber"));
+                String eventImage = cursor.getString(cursor.getColumnIndexOrThrow("eventImage"));
+
+                bookings.add(new Booking(bookingId, eventName, eventCategory, eventPrice, bookingDate, bookingPrice, bookingSlot, eventImage));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return bookings;
+    }
+
 
 
 
