@@ -135,6 +135,34 @@ public class SqLite extends SQLiteOpenHelper {
         return categories;
     }
 
+    public List<Event> getListEvent() {
+        List<Event> events = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT event.eventId AS id, event.eventtypename AS eventName, event.eventdate AS date, event.eventprice AS price," +
+                "event.eventImage AS img, eventType.eventtypename AS category " +
+                "FROM event " +
+                "INNER JOIN eventType ON event.eventtypeId = eventType.id", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("eventName"));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                String category = cursor.getString(cursor.getColumnIndexOrThrow("category"));
+                Double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
+                String eventImage = cursor.getString(cursor.getColumnIndexOrThrow("img"));
+
+                // Create a new Event object and add it to the list
+                events.add(new Event(id, name, date, category, price, eventImage));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return events;
+    }
+
 
     public List<Event> fetchEventsByType(int eventTypeId) {
         List<Event> events = new ArrayList<>();

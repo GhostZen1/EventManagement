@@ -24,18 +24,26 @@ public class AdminManageEvent extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
-    List<Event> list;
+    private List<Event> list; // Declare the list here
+    private AdminItemEventAdapter adapter; // Declare the adapter here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_manage_event);
 
+        // Initialize RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AdminItemEventAdapter adapter = new AdminItemEventAdapter(list);
+
+        // Load the list of events
+        loadEventList();
+
+        // Set up the adapter with the loaded list
+        adapter = new AdminItemEventAdapter(list);
         recyclerView.setAdapter(adapter);
 
+        // Set up DrawerLayout and Toolbar
         drawerLayout = findViewById(R.id.DrawerLayoutAdminManageEvent);
         Toolbar toolbar = findViewById(R.id.toolbar4);
         setSupportActionBar(toolbar);
@@ -48,11 +56,8 @@ public class AdminManageEvent extends AppCompatActivity {
 
         // Enable home button (hamburger icon) in action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Ensure the hamburger icon is visible in the ActionBar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
+        // Set up navigation view
         navigationView = findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(item -> {
             Intent intent;
@@ -69,7 +74,6 @@ public class AdminManageEvent extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_booking) {
-
                 intent = new Intent(AdminManageEvent.this, AdminManageBooking.class);
                 startActivity(intent);
                 return true;
@@ -80,5 +84,10 @@ public class AdminManageEvent extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    private void loadEventList() {
+        SqLite dbHelper = new SqLite(this);
+        list = dbHelper.getListEvent();
     }
 }

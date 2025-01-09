@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AdminUpdateEvent"
+            android:exported="false" />
+        <activity
+            android:name=".AdminAddEvent"
+            android:exported="false" />
+        <activity
             android:name=".AdminManageBooking"
             android:exported="false" />
         <activity
