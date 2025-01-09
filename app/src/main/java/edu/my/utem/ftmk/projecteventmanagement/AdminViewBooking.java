@@ -1,13 +1,10 @@
 package edu.my.utem.ftmk.projecteventmanagement;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -19,31 +16,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
-
-public class AdminManageEvent extends AppCompatActivity {
+public class AdminViewBooking extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
-    private List<Event> list;
-    private AdminItemEventAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_manage_event);
+        setContentView(R.layout.admin_view_booking);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        loadEventList();
-
-        adapter = new AdminItemEventAdapter(this,list);
-        recyclerView.setAdapter(adapter);
+//        adapter = new AdminItemEventAdapter(this,list);
+//        recyclerView.setAdapter(adapter);
 
         // Set up DrawerLayout and Toolbar
-        drawerLayout = findViewById(R.id.DrawerLayoutAdminManageEvent);
+        drawerLayout = findViewById(R.id.main);
         Toolbar toolbar = findViewById(R.id.toolbar4);
         setSupportActionBar(toolbar);
 
@@ -61,32 +52,27 @@ public class AdminManageEvent extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             Intent intent;
             if (item.getItemId() == R.id.nav_user) {
-                intent = new Intent(AdminManageEvent.this, AdminHomepage.class);
+                intent = new Intent(AdminViewBooking.this, AdminHomepage.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_eventType) {
-                intent = new Intent(AdminManageEvent.this, AdminEventType.class);
+                intent = new Intent(AdminViewBooking.this, AdminEventType.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_event) {
-                intent = new Intent(AdminManageEvent.this, AdminManageEvent.class);
+                intent = new Intent(AdminViewBooking.this, AdminManageEvent.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_booking) {
-                intent = new Intent(AdminManageEvent.this, AdminManageBooking.class);
+                intent = new Intent(AdminViewBooking.this, AdminManageBooking.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_logout) {
-                intent = new Intent(AdminManageEvent.this, LoginActivity.class);
+                intent = new Intent(AdminViewBooking.this, LoginActivity.class);
                 startActivity(intent);
                 return true;
             }
             return false;
         });
-    }
-
-    private void loadEventList() {
-        SqLite dbHelper = new SqLite(this);
-        list = dbHelper.getListEvent();
     }
 }
