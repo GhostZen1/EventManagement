@@ -21,4 +21,9 @@ public class EventType {
     public String getImageName() {
         return imageName;
     }
+
+    @Override
+    public String toString() {
+        return name;  // Display only the event type name in the Spinner
+    }
 }
