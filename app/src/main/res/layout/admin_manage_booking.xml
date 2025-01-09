@@ -26,7 +26,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/outline_calendar_view_day_24"
-                app:title="Manage Event Type" />
+                app:title="Manage Booking" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
