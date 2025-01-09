@@ -48,25 +48,36 @@ public class UserHomepage extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navigationView = findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(item -> {
-            Intent intent;
-            if (item.getItemId() == R.id.nav_homepage) {
-                intent = new Intent(UserHomepage.this, UserHomepage.class);
-                startActivity(intent);
-                return true;
-            } else if (item.getItemId() == R.id.nav_profile) {
-                intent = new Intent(UserHomepage.this, UserProfile.class);
-                startActivity(intent);
-                return true;
-            } else if (item.getItemId() == R.id.nav_booking_history) {
-                Toast.makeText(UserHomepage.this, "Booking History", Toast.LENGTH_SHORT).show();
-                return true;
-            } else if (item.getItemId() == R.id.nav_logout) {
-                // Handle logout here
-                return true;
-            }
-            return false;
-        });
+            navigationView.setNavigationItemSelectedListener(item -> {
+                Intent intent;
+                if (item.getItemId() == R.id.nav_homepage) {
+                    intent = new Intent(UserHomepage.this, UserHomepage.class);
+                    startActivity(intent);
+                    return true;
+                } else if (item.getItemId() == R.id.nav_profile) {
+                    intent = new Intent(UserHomepage.this, UserProfile.class);
+                    startActivity(intent);
+                    return true;
+                } else if (item.getItemId() == R.id.nav_booking_history) {
+                    intent = new Intent(UserHomepage.this, UserBookingHistory.class);
+                    startActivity(intent);
+                    return true;
+                } else if (item.getItemId() == R.id.nav_logout) {
+                    // Handle logout here
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();  // Clear all preferences
+                    editor.apply();  // Apply changes asynchronously
+
+                    // Navigate to LoginActivity
+                    intent = new Intent(UserHomepage.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the activity stack
+                    startActivity(intent);
+                    finish(); // Finish current activity so user cannot return to it with the back button
+                    Toast.makeText(UserHomepage.this, "Logout Successful", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            });
 
         // Set up button container for event categories
         buttonContainer = findViewById(R.id.buttonContainer);

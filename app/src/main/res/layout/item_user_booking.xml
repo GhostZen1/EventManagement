@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".BookingAdapter">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
+
+        <!-- Event Image -->
+        <ImageView
+            android:id="@+id/eventImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/txtEventName"
@@ -52,6 +60,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Booking Price"
+            android:textSize="14sp"
+            android:textColor="@color/dimgray"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/txtBookingSlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Booking Slot"
             android:textSize="14sp"
             android:textColor="@color/dimgray"
             android:layout_marginTop="4dp"/>

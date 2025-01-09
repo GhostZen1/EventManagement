@@ -29,8 +29,8 @@ public class UserReceipt extends AppCompatActivity {
         bookingPrice = sharedPreferences.getFloat("bookingPrice", 0.0f);
         slotNumber = sharedPreferences.getInt("slotNumber", 0);
 
-        Log.d("SharedPreferencesInReceipt", "Saved in receipt - userId: " + userId + ", eventId: " + eventId + ", bookingPrice: " + bookingPrice);
-        Toast.makeText(UserReceipt.this, "Saved in receipt - userId: " + userId + ", eventId: " + eventId + ", bookingPrice: " + bookingPrice, Toast.LENGTH_SHORT).show();
+        Log.d("SharedPreferencesInReceipt", "Saved in receipt - userId: " + userId + ", eventId: " + eventId + ", bookingPrice: " + bookingPrice + ", slotNumber: " + slotNumber);
+        Toast.makeText(UserReceipt.this, "Saved in receipt - userId: " + userId + ", eventId: " + eventId + ", bookingPrice: " + bookingPrice + ", slotNumber: " + slotNumber, Toast.LENGTH_SHORT).show();
 
         if (userId != -1 && eventId != -1) {
             // Add the booking to the database
