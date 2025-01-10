@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Project Event Management</string>
+    <string name="nav_open">Open Navigation</string>
+    <string name="nav_close">Close Navigation</string>
+    <string name="api_toyyibpay">https://www.etourmersing.com/Project/toyyibpay.php</string>
 </resources>

@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    android:layout_margin="8dp"
-    tools:context=".EventAdapter">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".BookingAdapter">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -24,7 +20,7 @@
             android:scaleType="centerCrop"/>
 
         <TextView
-            android:id="@+id/tvEventName"
+            android:id="@+id/txtEventName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event Name"
@@ -33,16 +29,7 @@
             android:textColor="@android:color/black"/>
 
         <TextView
-            android:id="@+id/tvEventDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Event Date"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            android:textColor="@color/dimgray"/>
-
-        <TextView
-            android:id="@+id/tvEventCategory"
+            android:id="@+id/txtEventCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event Category"
@@ -51,7 +38,7 @@
             android:layout_marginTop="4dp"/>
 
         <TextView
-            android:id="@+id/tvEventPrice"
+            android:id="@+id/txtEventPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event Price"
@@ -59,6 +46,32 @@
             android:textColor="@color/dimgray"
             android:layout_marginTop="4dp"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/txtBookingDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Booking Date"
+            android:textSize="14sp"
+            android:textColor="@color/dimgray"
+            android:layout_marginTop="4dp"/>
 
+        <TextView
+            android:id="@+id/txtBookingPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Booking Price"
+            android:textSize="14sp"
+            android:textColor="@color/dimgray"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/txtBookingSlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Booking Slot"
+            android:textSize="14sp"
+            android:textColor="@color/dimgray"
+            android:layout_marginTop="4dp"/>
+
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
