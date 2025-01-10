@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
 import java.util.List;
 
 public class UserHomepage extends AppCompatActivity{
@@ -83,7 +85,7 @@ public class UserHomepage extends AppCompatActivity{
         buttonContainer = findViewById(R.id.buttonContainer);
         dbHelper = new SqLite(this);
 
-        // Fetch event categories from the database
+// Fetch event categories from the database
         List<EventType> categories = dbHelper.getEventCategories();
         for (EventType event : categories) {
             // Add ImageView for the event type image
@@ -93,14 +95,23 @@ public class UserHomepage extends AppCompatActivity{
                     600)); // Set height for the image
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            // Extract the base name by removing the file extension
-            String baseName = event.getImageName().replaceFirst("\\.[^.]+$", ""); // Removes file extension
-            int resId = getResources().getIdentifier(baseName, "drawable", getPackageName());
+            // Construct the file path in the 'images' directory
+            String filePath = getFilesDir() + "/images/" + event.getImageName();  // event.getImageName() is the file name
 
-            if (resId != 0) {
-                imageView.setImageResource(resId); // Load image from drawable
+            Log.d("Image", "File Path: " + filePath);  // Log the file path for debugging
+
+            // Create a File object for the image
+            File imageFile = new File(filePath);
+
+            // Use Glide to load the image from internal storage if it exists, or use a placeholder if not found
+            if (imageFile.exists()) {
+                Glide.with(this)
+                        .load(imageFile)  // Load the image from internal storage
+                        .into(imageView);  // Set the image into the ImageView
             } else {
-                imageView.setImageResource(R.drawable.placeholder); // Fallback image if not found
+                Glide.with(this)
+                        .load(R.drawable.placeholder)  // Fallback to a placeholder image if the file is not found
+                        .into(imageView);  // Set the placeholder image into the ImageView
             }
 
             buttonContainer.addView(imageView); // Add ImageView to the container
@@ -117,6 +128,7 @@ public class UserHomepage extends AppCompatActivity{
 
             buttonContainer.addView(button); // Add Button to the container
         }
+
     }
 
 

@@ -1,11 +1,14 @@
 package edu.my.utem.ftmk.projecteventmanagement;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.File;
 import java.util.List;
 
 import com.bumptech.glide.Glide;
@@ -64,20 +67,22 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.eventCategory.setText(event.getCategory());
         holder.eventPrice.setText("RM " + String.valueOf(event.getPrice()));
 
-        // Extract the base name by removing the file extension
-        String baseName = event.getEventImage().replaceFirst("\\.[^.]+$", ""); // Remove file extension
+        // Construct the file path in the 'images' directory
+        String filePath = holder.itemView.getContext().getFilesDir() + "/images/" + event.getEventImage();  // event.getEventImage() is the file name
 
-        // Get the resource ID for the drawable
-        int resId = holder.itemView.getContext().getResources().getIdentifier(baseName, "drawable", holder.itemView.getContext().getPackageName());
+        Log.d("Image", "File Path: " + filePath);  // Log the file path for debugging")
 
-        // Use Glide to load the image from drawable if exists, or use a placeholder if not found
-        if (resId != 0) {
+        // Create a File object for the image
+        File imageFile = new File(filePath);
+
+        // Use Glide to load the image from internal storage if it exists, or use a placeholder if not found
+        if (imageFile.exists()) {
             Glide.with(holder.itemView.getContext())
-                    .load(resId)  // Load the image from the drawable resource
-                    .into(holder.eventImage);  // Assuming you have an ImageView with the ID 'eventImage' in your layout
+                    .load(imageFile)  // Load the image from internal storage
+                    .into(holder.eventImage);  // Assuming you have an ImageView with the ID 'eventImage'
         } else {
             Glide.with(holder.itemView.getContext())
-                    .load(R.drawable.placeholder)  // Fallback to placeholder image if not found
+                    .load(R.drawable.placeholder)  // Fallback to a placeholder image if the file is not found
                     .into(holder.eventImage);  // Assuming you have an ImageView with the ID 'eventImage'
         }
     }

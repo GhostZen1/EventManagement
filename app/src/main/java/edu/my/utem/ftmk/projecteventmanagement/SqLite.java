@@ -384,6 +384,31 @@ public class SqLite extends SQLiteOpenHelper {
         return rowsDeleted > 0;
     }
 
+    public List<Booking2> viewBooking() {
+        List<Booking2> bookings = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT bookingId, userId, eventId, bookingdate, bookingprice, slotNumber FROM booking";
+        Cursor cursor = db.rawQuery(query, null); // No selection arguments, fetch all rows
+
+        if (cursor.moveToFirst()) {
+            do {
+                int bookingId = cursor.getInt(cursor.getColumnIndexOrThrow("bookingId"));
+                int userId = cursor.getInt(cursor.getColumnIndexOrThrow("userId"));
+                int eventId = cursor.getInt(cursor.getColumnIndexOrThrow("eventId"));
+                String bookingDate = cursor.getString(cursor.getColumnIndexOrThrow("bookingdate"));
+                double bookingPrice = cursor.getDouble(cursor.getColumnIndexOrThrow("bookingprice"));
+                int slotNumber = cursor.getInt(cursor.getColumnIndexOrThrow("slotNumber"));
+
+                // Add the booking details to the list
+                bookings.add(new Booking2(bookingId, userId, eventId, bookingDate, bookingPrice, slotNumber));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return bookings;
+    }
 
 
 

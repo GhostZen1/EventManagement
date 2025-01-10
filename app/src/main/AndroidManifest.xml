@@ -37,10 +37,10 @@
             android:name=".AdminManageEvent"
             android:exported="false" />
         <activity
-            android:name=".AdminAddEvent"
+            android:name=".AdminAddEventType"
             android:exported="false" />
         <activity
-            android:name=".AdminEventType"
+            android:name=".AdminManageEventType"
             android:exported="false" />
         <activity
             android:name=".UserBookingHistory"

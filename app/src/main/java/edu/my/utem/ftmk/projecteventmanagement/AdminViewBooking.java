@@ -3,13 +3,9 @@ package edu.my.utem.ftmk.projecteventmanagement;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,7 +52,7 @@ public class AdminViewBooking extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_eventType) {
-                intent = new Intent(AdminViewBooking.this, AdminEventType.class);
+                intent = new Intent(AdminViewBooking.this, AdminManageEventType.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_event) {

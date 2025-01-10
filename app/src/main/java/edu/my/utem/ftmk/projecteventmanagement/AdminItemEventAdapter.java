@@ -53,7 +53,6 @@ public class AdminItemEventAdapter extends RecyclerView.Adapter<AdminItemEventAd
 //                    .into(holder.eventImage);
 //        }
 
-
         // Create a File object for the image
         File imageFile = new File(filePath);
 

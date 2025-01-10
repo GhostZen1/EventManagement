@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -18,25 +19,25 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
-    public class AdminManageEvent extends AppCompatActivity {
+public class AdminManageEventType extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
     private RecyclerView recyclerView;
-    private AdminItemEventAdapter adapter;
+    private AdminItemEventTypeAdapter adapter;
     private SqLite dbHelper;
-    private List<Event> eventList;
-    private Button btnAddEvent;
+    private List<EventType> eventTypeList;
+    private Button btnAddEventType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_manage_event);
+        setContentView(R.layout.admin_event_type);
 
-        btnAddEvent = findViewById(R.id.btnAddEvent);
-        btnAddEvent.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminManageEvent.this, AdminAddEvent.class);
+        btnAddEventType = findViewById(R.id.btnAddEventType);
+        btnAddEventType.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminManageEventType.this, AdminAddEventType.class);
             startActivity(intent);
         });
 
@@ -44,14 +45,14 @@ import java.util.List;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         dbHelper = new SqLite(this);
-        eventList = dbHelper.fetchAllEvents(); // Pass the event type ID as needed
+        eventTypeList = dbHelper.getEventCategories();
 
-        adapter = new AdminItemEventAdapter(this, eventList);
+        adapter = new AdminItemEventTypeAdapter(this, eventTypeList);
 
         // Initialize adapter with delete click listener
-        adapter.setOnEventDeleteClickListener(position -> {
-            // Handle delete event click
-            deleteEvent(eventList.get(position).getId(), position);
+        adapter.setOnEventTypeDeleteClickListener(position -> {
+            // Handle delete event type click
+            deleteEventType(eventTypeList.get(position).getId(), position);
         });
 
         recyclerView.setAdapter(adapter);
@@ -73,23 +74,23 @@ import java.util.List;
         navigationView.setNavigationItemSelectedListener(item -> {
             Intent intent;
             if (item.getItemId() == R.id.nav_user) {
-                intent = new Intent(AdminManageEvent.this, AdminHomepage.class);
+                intent = new Intent(AdminManageEventType.this, AdminHomepage.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_eventType) {
-                intent = new Intent(AdminManageEvent.this, AdminManageEventType.class);
+                intent = new Intent(AdminManageEventType.this, AdminManageEventType.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_event) {
-                intent = new Intent(AdminManageEvent.this, AdminManageEvent.class);
+                intent = new Intent(AdminManageEventType.this, AdminManageEvent.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_booking) {
-                intent = new Intent(AdminManageEvent.this, AdminManageBooking.class);
+                intent = new Intent(AdminManageEventType.this, AdminManageBooking.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_logout) {
-                intent = new Intent(AdminManageEvent.this, LoginActivity.class);
+                intent = new Intent(AdminManageEventType.this, LoginActivity.class);
                 startActivity(intent);
                 return true;
             }
@@ -97,24 +98,24 @@ import java.util.List;
         });
     }
 
-    private void deleteEvent(int eventId, int position) {
+    private void deleteEventType(int eventTypeId, int position) {
         // Show a confirmation dialog before deleting
         new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to delete this event?")
+                .setMessage("Are you sure you want to delete this event type?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
-                    // Delete event from database
+                    // Delete event type from database
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
-                    int rowsDeleted = db.delete("event", "eventId = ?", new String[]{String.valueOf(eventId)});
+                    int rowsDeleted = db.delete("eventType", "id = ?", new String[]{String.valueOf(eventTypeId)});
                     db.close();
 
                     if (rowsDeleted > 0) {
-                        // Remove the event from the list and notify the adapter
-                        eventList.remove(position);
+                        // Remove the event type from the list and notify the adapter
+                        eventTypeList.remove(position);
                         adapter.notifyItemRemoved(position);
-                        Toast.makeText(AdminManageEvent.this, "Event deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminManageEventType.this, "Event type deleted", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(AdminManageEvent.this, "Failed to delete event", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminManageEventType.this, "Failed to delete event type", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("No", (dialog, id) -> {

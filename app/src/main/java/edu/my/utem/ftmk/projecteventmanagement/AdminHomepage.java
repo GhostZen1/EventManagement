@@ -6,9 +6,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -61,7 +58,7 @@ public class AdminHomepage extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_eventType) {
-                intent = new Intent(AdminHomepage.this, AdminEventType.class);
+                intent = new Intent(AdminHomepage.this, AdminManageEventType.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_event) {

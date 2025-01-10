@@ -30,6 +30,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,32 +112,35 @@ public class UserBooking extends AppCompatActivity {
     // Method to load the event image
     private void loadImageFromName(String imageName) {
         if (imageName != null && !imageName.isEmpty()) {
-            // Extract the base name by removing the file extension
-            String baseName = imageName.replaceFirst("\\.[^.]+$", ""); // Removes file extension
+            // Construct the file path in the 'images' directory
+            String filePath = getFilesDir() + "/images/" + imageName;  // 'imageName' is the file name
 
-            // Get the resource ID for the drawable
-            int resId = getResources().getIdentifier(baseName, "drawable", getPackageName());
+            Log.d("Image", "File Path: " + filePath);  // Log the file path for debugging
 
-            // Use Glide to load the image from drawable resource if it exists
-            if (resId != 0) {
+            // Create a File object for the image
+            File imageFile = new File(filePath);
+
+            // Use Glide to load the image from internal storage if it exists, or use a placeholder if not found
+            if (imageFile.exists()) {
                 Glide.with(this)
-                        .load(resId) // Load image from drawable resource
+                        .load(imageFile)  // Load the image from internal storage
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(eventImage); // Set the image into the ImageView
+                        .into(eventImage);  // Set the image into the ImageView
             } else {
                 Glide.with(this)
-                        .load(R.drawable.placeholder) // Fallback to a placeholder image if not found
+                        .load(R.drawable.placeholder)  // Fallback to a placeholder image if the file is not found
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(eventImage); // Set the placeholder image into the ImageView
+                        .into(eventImage);  // Set the placeholder image into the ImageView
             }
         } else {
             // Fallback if image name is empty or null
             Glide.with(this)
-                    .load(R.drawable.placeholder) // Use placeholder
+                    .load(R.drawable.placeholder)  // Use placeholder
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(eventImage); // Set the placeholder image
+                    .into(eventImage);  // Set the placeholder image
         }
     }
+
 
     private void updateTotalPrice(String input) {
         if (!input.isEmpty()) {
