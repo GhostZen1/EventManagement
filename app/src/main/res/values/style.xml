@@ -3,5 +3,12 @@
         <item name="cornerRadius">10dp</item>
         <item name="backgroundTint">@color/Accent</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textfield" parent="Widget.AppCompat.EditText">
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">@color/Background</item>
     </style>
 </resources>
