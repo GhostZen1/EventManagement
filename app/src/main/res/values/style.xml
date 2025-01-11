@@ -11,4 +11,13 @@
         <item name="android:textColorHint">@color/gray</item>
         <item name="android:textColor">@color/Background</item>
     </style>
+
+    <style name="ToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:background">@color/Background</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
