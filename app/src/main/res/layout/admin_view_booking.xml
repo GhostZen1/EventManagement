@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminViewBooking">
+    tools:context=".AdminViewBooking"
+    android:background="@color/Background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
                 android:id="@+id/toolbar4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:background="@color/Background"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerView"
                 app:layout_constraintEnd_toEndOf="parent"
