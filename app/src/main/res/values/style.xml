@@ -20,4 +20,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="text" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+
 </resources>
