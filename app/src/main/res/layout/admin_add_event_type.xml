@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".AdminAddEventType">
 
+    <!-- Background Image -->
+    <ImageView
+        android:id="@+id/bgImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="Background Image"
+        android:background="@color/Background" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,31 +25,43 @@
             android:id="@+id/toolbar3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="#24293D"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
+            android:theme="?attr/actionBarTheme">
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Event Type"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_gravity="center" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="88dp"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvEventTypeName"
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Event Name : " />
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:text="Event Name : "
+                android:textColor="@color/white" />
 
             <EditText
                 android:id="@+id/etEventTypeName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:ems="10"
                 android:hint="Event Type Name"
-                android:inputType="text" />
+                android:inputType="text"
+                android:padding="12dp"
+                android:background="@drawable/edit_text_background"/>
         </LinearLayout>
 
 
@@ -48,20 +69,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvUploadImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Upload Image : " />
+                android:text="Upload Image : "
+                android:textColor="@color/white"/>
 
             <Button
                 android:id="@+id/btnUploadImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Choose Image" />
+                android:text="Choose Image"
+                android:layout_marginTop="4dp"
+                android:backgroundTint="@color/dimgray"
+                android:textColor="#FFFFFF"/>
         </LinearLayout>
 
         <LinearLayout
@@ -75,7 +100,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Selected File: " />
+                android:hint="Selected File: "
+                android:background="@drawable/edit_text_background"/>
         </LinearLayout>
 
         <Button
@@ -83,7 +109,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="SUBMIT" />
+            android:text="SUBMIT"
+            style="@style/CustomButtonStyle"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
