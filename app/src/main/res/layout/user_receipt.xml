@@ -24,149 +24,222 @@
         android:layout_width="379dp"
         android:layout_height="511dp"
         android:layout_margin="15dp"
-        android:background="@color/third"
+        android:background="@drawable/border_radius"
         android:orientation="vertical"
         android:padding="20dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp">
 
-
-        <TextView
-            android:id="@+id/txtEventNameTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Event Name"
-            android:textColor="@color/Accent2"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txtEventName"
-            style="@style/text"
-            android:layout_width="331dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="#80000000"
-            android:padding="8dp"
-            android:text="Event Name"
-            android:textColor="#80FFFFFF"
-            android:textSize="16sp" />
-
         <!-- Booking Slot Title and Value -->
         <TextView
-            android:id="@+id/txtBookingSlotTitle"
+            android:id="@+id/txtEventName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Booking Slot"
-            android:textColor="@color/Accent2"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txtBookingSlot"
-            style="@style/text"
-            android:layout_width="331dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="#80000000"
-            android:padding="8dp"
-            android:text="Slot"
-            android:textColor="#80FFFFFF"
-            android:textSize="16sp" />
-
-        <!-- Event Date Title and Value -->
-        <TextView
-            android:id="@+id/txtEventDateTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Event Date"
-            android:textColor="@color/Accent2"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txtEventDate"
-            style="@style/text"
-            android:layout_width="331dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="#80000000"
-            android:padding="8dp"
-            android:text="Event Date"
-            android:textColor="#80FFFFFF"
-            android:textSize="16sp" />
-
-        <!-- Event Type Title and Value -->
-        <TextView
-            android:id="@+id/txtEventTypeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Event Type"
-            android:textColor="@color/Accent2"
-            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Event Name"
+            android:textColor="@color/white"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtEventType"
-            style="@style/text"
-            android:layout_width="331dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="#80000000"
-            android:padding="8dp"
-            android:text="Event Type"
-            android:textColor="#80FFFFFF"
-            android:textSize="16sp" />
+            android:layout_marginBottom="25dp"
+            android:text="event type"
+            android:textColor="@color/Accent2"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Booking Name -->
+        <LinearLayout
+            android:layout_width="349dp"
+            android:layout_height="61dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="234dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:text="Name"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtusername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Full Name Display Here"
+                    android:textColor="@color/Accent"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Booking Slot -->
+            <LinearLayout
+                android:layout_width="161dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textBookingSlot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Booking Slot"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtBookingSlot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Booking Slot"
+                    android:textColor="@color/Accent"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Booking Date -->
+        <TextView
+            android:id="@+id/textdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Date"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtEventDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Event Date"
+            android:textColor="@color/Accent"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Event Type Title and Value -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white" />
 
         <!-- Event Price Title and Value -->
         <TextView
-            android:id="@+id/txtEventPriceTitle"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Event Price"
-            android:textColor="@color/Accent2"
+            android:text="Price:"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- Booking Price Title and Value -->
-        <TextView
-            android:id="@+id/txtEventPrice"
-            style="@style/text"
-            android:layout_width="331dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="#80000000"
-            android:padding="8dp"
-            android:text="Event Price"
-            android:textColor="#80FFFFFF"
-            android:textSize="16sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="194dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtBookingPriceTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Total Price"
-            android:textColor="@color/Accent2"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/txtBookingPrice"
-            style="@style/text"
-            android:layout_width="331dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="#80000000"
-            android:padding="8dp"
-            android:text="Total Price"
-            android:textColor="#80FFFFFF"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="173dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Per Ticket"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtEventPrice"
+                    android:layout_width="162dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Event Price"
+                    android:textColor="@color/Accent"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textBookingSlot2"
+                    android:layout_width="119dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Booking Slot"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtBookingSlot2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Booking Slot"
+                    android:textColor="@color/Accent"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="173dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Total Price:"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtBookingPrice"
+                    android:layout_width="163dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Total Price"
+                    android:textColor="@color/Accent"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

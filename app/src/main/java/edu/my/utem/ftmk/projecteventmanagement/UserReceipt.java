@@ -16,7 +16,7 @@ public class UserReceipt extends AppCompatActivity {
     private float bookingPrice;
     private double eventPrice;
     private String eventName, eventDate, eventTypeName;
-    private TextView txtEventName, txtEventDate, txtBookingSlot, txtEventType, txtEventPrice, txtBookingPrice;
+    private TextView txtEventName, txtEventDate, txtBookingSlot, txtEventType, txtEventPrice, txtBookingPrice, txtBookingSlot2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class UserReceipt extends AppCompatActivity {
         txtEventType = findViewById(R.id.txtEventType);
         txtEventPrice = findViewById(R.id.txtEventPrice);
         txtBookingPrice = findViewById(R.id.txtBookingPrice);
-
+        txtBookingSlot2 = findViewById(R.id.txtBookingSlot2);
         // Retrieve the shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserBookingPrefs", Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("userId", -1);
@@ -85,6 +85,7 @@ public class UserReceipt extends AppCompatActivity {
                 txtEventType.setText(eventTypeName != null ? eventTypeName : "N/A");
                 txtEventPrice.setText(String.format("RM %.2f", eventPrice));
                 txtBookingPrice.setText(String.format("RM %.2f", bookingPrice));
+                txtBookingSlot2.setText(String.valueOf(slotNumber));
 
                 // Display a confirmation Toast
                 Toast.makeText(UserReceipt.this, "Event: " + eventName + "\nDate: " + eventDate +
