@@ -78,9 +78,9 @@ public class UserBooking extends AppCompatActivity {
         String eventImage = getIntent().getStringExtra("EVENT_IMAGE");
 
         // Set the data to the TextViews
-        tvPrice.setText("Price: RM " + eventPrice);
-        tvEventName.setText("Event: " + eventName);
-        tvCategory.setText("Category: " + category);
+        tvPrice.setText("RM " + eventPrice);
+        tvEventName.setText(eventName);
+        tvCategory.setText(category);
 
         loadImageFromName(eventImage);
 
@@ -147,12 +147,12 @@ public class UserBooking extends AppCompatActivity {
             try {
                 slotNumber = Integer.parseInt(input);
                 totalPrice = slotNumber * eventPrice;
-                tvTotalPrice.setText(String.format("Total Price: RM %.2f", totalPrice));
+                tvTotalPrice.setText(String.format("Total Price:\nRM %.2f", totalPrice));
             } catch (NumberFormatException e) {
                 tvTotalPrice.setText("Invalid input");
             }
         } else {
-            tvTotalPrice.setText("Total Price: RM 0.00");
+            tvTotalPrice.setText("Total Price:\nRM 0.00");
         }
     }
 

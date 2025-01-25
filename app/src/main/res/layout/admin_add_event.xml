@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminAddEvent">
+    tools:context=".AdminAddEvent"
+    android:background="@color/Background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,54 +17,73 @@
             android:id="@+id/toolbar3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/Background"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
+            android:theme="?attr/actionBarTheme" >
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Event"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_gravity="center" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvEventName"
-                android:layout_width="1dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Event Name : " />
+                android:text="Event Name : "
+                android:textColor="@color/white"/>
 
             <EditText
                 android:id="@+id/etEventName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:hint="Event Name"
-                android:inputType="text" />
+                android:inputType="text"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvEventDate"
-                android:layout_width="1dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Event Date :" />
+                android:text="Event Date :"
+                android:textColor="@color/white"/>
 
             <EditText
                 android:id="@+id/etDate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Event Date"
-                android:inputType="date" />
+                android:inputType="date"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_background"/>
 
         </LinearLayout>
 
@@ -71,20 +91,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvEventType"
-                android:layout_width="1dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Event Type :" />
+                android:text="Event Type :"
+                android:textColor="@color/white"/>
 
             <Spinner
                 android:id="@+id/spinnerEventType"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
+                android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="textPassword" />
 
@@ -94,23 +117,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvEventPrice"
-                android:layout_width="1dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Event Price" />
+                android:text="Event Price"
+                android:textColor="@color/white"/>
 
             <EditText
                 android:id="@+id/txtIc"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="RMXX.XX"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_background"/>
 
         </LinearLayout>
 
@@ -118,20 +145,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvUploadImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Upload Image : " />
+                android:text="Upload Image : "
+                android:textColor="@color/white"/>
 
             <Button
                 android:id="@+id/btnUploadImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Choose Image" />
+                android:text="Choose Image"
+                android:layout_marginTop="4dp"
+                android:backgroundTint="@color/dimgray"/>
         </LinearLayout>
 
         <LinearLayout
@@ -145,7 +175,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Selected File: " />
+                android:text="Selected File: "
+                android:background="@drawable/edit_text_background"/>
         </LinearLayout>
 
         <Button
@@ -153,7 +184,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="SUBMIT" />
+            android:text="SUBMIT"
+            style="@style/CustomButtonStyle"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

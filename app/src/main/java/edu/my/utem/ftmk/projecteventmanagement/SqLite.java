@@ -64,7 +64,7 @@ public class SqLite extends SQLiteOpenHelper {
 
         //user
         db.execSQL("INSERT INTO user (email, password, username, ic, role) VALUES ('2', '2', 'admin', '01', 'admin');");
-        db.execSQL("INSERT INTO user (email, password, username, ic, role) VALUES ('1', '1', '1', '1', 'user');");
+        db.execSQL("INSERT INTO user (email, password, username, ic, role) VALUES ('1', '1', 'Azrul', '1', 'user');");
         //main event type
         db.execSQL("INSERT INTO eventType (eventtypename, eventtypeImage) VALUES ('Concerts','concert.jpeg');");
         db.execSQL("INSERT INTO eventType (eventtypename, eventtypeImage) VALUES ('Sport','sport.jpg');");
@@ -120,6 +120,22 @@ public class SqLite extends SQLiteOpenHelper {
         db.close();
         return userSession; // Return user ID and role
     }
+
+    public String getUsernameByUserId(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String username = null;
+        String query = "SELECT username FROM user WHERE UserId = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+        }
+
+        cursor.close();
+        db.close();
+        return username;
+    }
+
 
 
     public List<EventType> getEventCategories() {
