@@ -16,7 +16,7 @@ public class UserReceipt extends AppCompatActivity {
     private float bookingPrice;
     private double eventPrice;
     private String eventName, eventDate, eventTypeName;
-    private TextView txtEventName, txtEventDate, txtBookingSlot, txtEventType, txtEventPrice, txtBookingPrice, txtBookingSlot2;
+    private TextView txtEventName, txtEventDate, txtBookingSlot, txtEventType, txtEventPrice, txtBookingPrice, txtBookingSlot2, txtUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,8 @@ public class UserReceipt extends AppCompatActivity {
         txtEventPrice = findViewById(R.id.txtEventPrice);
         txtBookingPrice = findViewById(R.id.txtBookingPrice);
         txtBookingSlot2 = findViewById(R.id.txtBookingSlot2);
+        txtUsername = findViewById(R.id.txtusername);
+
         // Retrieve the shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserBookingPrefs", Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("userId", -1);
@@ -39,6 +41,16 @@ public class UserReceipt extends AppCompatActivity {
         slotNumber = sharedPreferences.getInt("slotNumber", 0);
 
         Log.d("UserReceipt", "userId: " + userId + ", eventId: " + eventId + ", bookingPrice: " + bookingPrice + ", slotNumber: " + slotNumber);
+
+
+        // Fetch username and set it
+        if (userId != -1) {
+            SqLite dbHelper = new SqLite(this);
+            String username = dbHelper.getUsernameByUserId(userId);
+            txtUsername.setText(username != null ? username : "N/A");
+        } else {
+            txtUsername.setText("Invalid User");
+        }
 
         if (userId != -1 && eventId != -1) {
             // Perform the booking operation in the background
