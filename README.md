@@ -75,8 +75,8 @@ The application integrates **ToyyibPay API** for payment processing. The API is 
 - Introduce **QR code tickets** for event entry validation.
 
 ## Images
-![image](https://github.com/user-attachments/assets/08187eeb-4611-46c4-a3e4-04bc73730e5b)
-![image](https://github.com/user-attachments/assets/c881fb98-0fa1-48db-b926-22ade4620ca1)
+![image](https://github.com/user-attachments/assets/89eb900c-1f1e-4661-85e7-a6e167595119)
+![image](https://github.com/user-attachments/assets/3cb88858-d18b-4aa8-a011-aba2731f2475)
 ![image](https://github.com/user-attachments/assets/2219696f-8f23-4cf1-a36d-ac49c0525870)
 ![image](https://github.com/user-attachments/assets/1047fff9-200d-46b6-9773-12e1171605c0)
 
