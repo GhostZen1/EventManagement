@@ -2,7 +2,6 @@
 
 ## Introduction
 This **Event Management App** is a mobile application designed to simplify online event booking. Users can browse, filter, and book tickets for various events such as concerts, fun runs, charity programs, and educational seminars. The application provides seamless booking experiences, generates receipts upon successful booking, and allows users to view their booking history. Administrators can manage event categories, add new events, and monitor user bookings.
-![image](https://github.com/user-attachments/assets/a67c7e8e-55cb-442e-80a5-aa043e5e000c)
 
 ## Features
 ### User Features:
@@ -75,4 +74,8 @@ The application integrates **ToyyibPay API** for payment processing. The API is 
 - Add **push notifications** for event updates.
 - Introduce **QR code tickets** for event entry validation.
 
+## Images
+  ![image](https://github.com/user-attachments/assets/08187eeb-4611-46c4-a3e4-04bc73730e5b)
+![image](https://github.com/user-attachments/assets/c881fb98-0fa1-48db-b926-22ade4620ca1)
+![image](https://github.com/user-attachments/assets/2219696f-8f23-4cf1-a36d-ac49c0525870)
 
