@@ -2,6 +2,7 @@
 
 ## Introduction
 This **Event Management App** is a mobile application designed to simplify online event booking. Users can browse, filter, and book tickets for various events such as concerts, fun runs, charity programs, and educational seminars. The application provides seamless booking experiences, generates receipts upon successful booking, and allows users to view their booking history. Administrators can manage event categories, add new events, and monitor user bookings.
+![image](https://github.com/user-attachments/assets/a67c7e8e-55cb-442e-80a5-aa043e5e000c)
 
 ## Features
 ### User Features:
