@@ -47,7 +47,7 @@ dependencies {
 ## How to Run the App
 1. Clone the repository:
    ```sh
-   git clone https://github.com/EvenManagement
+   git clone https://github.com/GhostZen1/EventManagement.git
    ```
 2. Open the project in **Android Studio**.
 3. Sync Gradle to install dependencies.
